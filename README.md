@@ -55,7 +55,7 @@ var config = {
 ## Examples
 [Predict Getting into Harvard Law](https://www.mylogreg.us)
 
-![alt text](https://github.com/kaseyb002/MyLogReg/blob/master/assets/img/example.png "Harvard Calculator")
+![alt text](https://github.com/kaseyb002/MyLogReg/blob/master/public/assets/img/example.png "Harvard Calculator")
 
 [Predict Heart Disease](https://www.mylogreg.us/heart.html)
 
