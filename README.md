@@ -1,7 +1,7 @@
 # MyLogReg
-Let people play with your logistic regression model.
+Let other people play with your logistic regression model.
 
-### How-To
+## How-To
 Just plug your model into the config var at the top of the HTML file and fill out a few settings. 
 ```javascript
 /**************BEGIN EDITING HERE************/
@@ -42,7 +42,7 @@ var config = {
 /*************STOP EDITING HERE**************/
 ```
 
-#####How to Input Binary Variables:
+###Inputting Binary Variables:
 ```javascript
 {
 	name: "Male",
@@ -52,7 +52,7 @@ var config = {
 },
 ```
 
-### Examples
+## Examples
 [Predict Getting into Harvard Law](https://www.mylogreg.us)
 
 ![alt text](https://github.com/kaseyb002/MyLogReg/blob/master/assets/img/example.png "Harvard Calculator")
