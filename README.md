@@ -1,6 +1,8 @@
 # MyLogReg
 Let other people play with your logistic regression model.
 
+[Try it!](https://www.mylogreg.us)
+
 ## How-To
 Just plug your model into the config var at the top of the HTML file and fill out a few settings. 
 ```javascript
