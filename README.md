@@ -49,4 +49,4 @@ var config = {
 
 [Predict Heart Disease](https://www.mylogreg.us/heart.html)
 
-[Preddict Passing Exam](https://www.mylogreg.us/study.html)
+[Predict Passing Exam](https://www.mylogreg.us/study.html)
