@@ -42,6 +42,16 @@ var config = {
 /*************STOP EDITING HERE**************/
 ```
 
+#####How to Input Binary Variables:
+```javascript
+{
+	name: "Male",
+	coefficient: 0.098,
+	binary: true,
+	defaultValue: false,
+},
+```
+
 ### Examples
 [Predict Getting into Harvard Law](https://www.mylogreg.us)
 
