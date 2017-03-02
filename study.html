@@ -1,0 +1,410 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>My Log Reg</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="assets/css/bootstrap.min.css" media="screen">
+<link rel="stylesheet" href="assets/css/style.css" media="screen">
+<script type="text/javascript">
+/********************************************/
+/********************************************/
+/********************************************/
+/**************BEGIN EDITING HERE************/
+var config = {
+    headerTitle: "Study Time Calculator",
+    resultsTitle: "Chance of Passing Exam",
+    likelihoodLabel: "Likelihood of Passing",
+    intercept: -4.13444,
+    variables: [
+    {
+        name: "Hours",
+        coefficient: 1.5046,
+        binary: false,
+        min: 0,
+        max: 8,
+        defaultValue: 2,
+        selectIncrement: 0.5,
+        decimalPlaces: 1,
+        graphIncrement: 0.5,
+        graphAxisMin: 0,
+        graphAxisMax: 10
+    }
+    ]
+};
+/*source: https://en.wikipedia.org/wiki/Logistic_regression#Example:_Probability_of_passing_an_exam_versus_hours_of_study*/
+/*************STOP EDITING HERE**************/
+/********************************************/
+/********************************************/
+/********************************************/
+/********************************************/
+    function calcProbability(logit) {
+        var e_logit = Math.exp(logit);
+        var probability = e_logit / (1 + e_logit);
+        probability = probability.toFixed(2);
+        return probability;
+    }
+    function colClassName(index, totalCols) {
+        let diff = totalCols - (index+1);
+        if (diff > 1) {
+            return "col-sm-4 col-variable";
+        }
+    
+        let hangingCols = totalCols % 3;
+
+        if (hangingCols == 2) {
+            return "col-sm-6 col-variable";
+        } else if (hangingCols == 1 && diff == 0) {
+            return "col-sm-12 col-variable";
+        }
+        return "col-sm-4 col-variable";
+    }
+    function rowsNeeded(totalCols) {
+        let fullRows = Math.floor(totalCols / 3);
+        if ((totalCols & 3) === 0) {
+            return fullRows;
+        }
+        return fullRows + 1;
+    }
+    function createSelectForVar(variable) {
+        //create DOM element for this variable
+        var select = document.createElement("select");
+        select.className = "select-variable";
+        select.id = variable.name;
+
+        //load in values
+        for (i = variable.min; i <= variable.max; i += variable.selectIncrement) {
+            var value = parseFloat(Math.round(i * 100) / 100).toFixed(variable.decimalPlaces);
+            var option = document.createElement("option");
+            option.innerHTML = value;
+            select.appendChild(option);
+        }
+        select.value = variable.defaultValue;
+
+        //create column for DOM
+        var label = document.createElement("label");
+        label.setAttribute("for", variable.name);
+        label.innerHTML = variable.name;
+
+        var colDiv = document.createElement("div");
+        colDiv.appendChild(label);
+        colDiv.appendChild(select);
+
+        return colDiv;
+    }
+    function createCheckForBinaryVar(variable) {
+        //create DOM element for this variable
+        var checkbox = document.createElement("INPUT");
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.id = variable.name;
+        checkbox.checked = variable.defaultValue;
+        
+        var checkLabel = document.createElement("label");
+        checkLabel.className = "check-label";
+        checkLabel.appendChild(checkbox);
+        var name = document.createTextNode(variable.name);
+        checkLabel.appendChild(name);
+
+        var checkDiv = document.createElement("div");
+        checkDiv.className = "checkbox checkbox-variable";
+        checkDiv.appendChild(checkLabel);
+
+        //create column for DOM
+        var colDiv = document.createElement("div");
+        colDiv.appendChild(checkDiv);
+
+        return colDiv;
+    }
+    //load DOM elements for config
+    $(document).ready(function () {
+        //Build the DOM for user selection of values
+        var header = document.getElementById("main-header");
+        header.innerHTML = config.headerTitle;
+
+        var columns = [];
+         
+        //create selection divs for each variable
+        for (let variable of config.variables) {
+            var colDiv;
+            if (variable.binary) {
+                columns.push(createCheckForBinaryVar(variable));
+            } else {
+                columns.push(createSelectForVar(variable));
+            }
+        }
+
+        //first we will create rows, then populate those rows with the cols
+        var rows = [];
+        for (i = 0; i <= rowsNeeded(columns.length); i++) {
+            var rowDiv = document.createElement("div");
+            rowDiv.className = "row";
+            rows.push(rowDiv);
+        }
+
+        var colIndex = 0;
+        for (var col of columns) {
+            col.className = colClassName(colIndex, columns.length);
+            rows[Math.floor(colIndex / 3)].appendChild(col);
+            colIndex += 1;
+        }
+        
+        var mainDiv = document.getElementById("main");
+        for (let row of rows) {
+            mainDiv.appendChild(row);
+        }
+
+        var select = document.createElement("select");
+        select.className = "select-graph-axis";
+        select.id = "graph-axis";
+        var label = document.createElement("label");
+        label.setAttribute("for", label);
+        label.innerHTML = "Graph Axis";
+
+        for (let variable of config.variables) {
+            var option = document.createElement("option");
+            option.innerHTML = variable.name;
+            select.appendChild(option);
+        }
+
+        var axisDiv = document.createElement("div");
+        axisDiv.className = "select-axis-div";
+        axisDiv.appendChild(label);
+        axisDiv.appendChild(select);
+        mainDiv.appendChild(axisDiv);
+        
+        var buttonDiv = document.createElement("div");
+        buttonDiv.className = "button-div";
+        var predictButton = document.createElement("button");
+        predictButton.id = "predict-button";
+        predictButton.innerHTML = "predict";
+        predictButton.className = "btn-primary";
+        buttonDiv.appendChild(predictButton);
+        
+        mainDiv.appendChild(buttonDiv);
+    });
+    //the big process that runs once the users clicks predict
+    $(function () {
+        $("#predict-button").click(function () {
+            $("#result-space").show();       
+            //first, we will calculate the requested probability for the given GPA/LSAT
+            var logit = config.intercept;
+            for (let variable of config.variables) {
+                var selectedValue;
+                if (variable.binary) {
+                    if (document.getElementById(variable.name).checked) {
+                        selectedValue = 1;
+                    } else {
+                        selectedValue = 0;
+                    }
+                } else {
+                    selectedValue = document.getElementById(variable.name).value;
+                }
+                var this_logit = variable.coefficient * selectedValue;
+                logit += this_logit;
+            }
+
+            var probability = calcProbability(logit) * 100;
+            document.getElementById('probability').innerHTML = probability.toFixed(0) + "%"; //displaying the result
+
+            //checking which x-axis selected
+            var x_axis_title = document.getElementById('graph-axis').value;
+            var selectedVar;
+            //grab the selected variable
+            for (let variable of config.variables) {
+                if (x_axis_title === variable.name) {
+                    selectedVar = variable;
+                }
+            }
+            var resultsTitle = document.getElementById('results-title');
+            resultsTitle.innerHTML = config.resultsTitle;
+
+            /**CHART START**/
+            if (selectedVar.binary) {//BAR CHART
+                var x_axis = ["Non-" + selectedVar.name, selectedVar.name];
+                var probabilities = [];
+
+                for (i = 0; i <= 1; i = i + 1) {
+                    var logit = config.intercept;
+                    logit += selectedVar.coefficient * i;
+
+                    for (let variable of config.variables) {
+                        if (variable.name != selectedVar.name) {
+                            var selectedValue;
+                            if (variable.binary) {
+                                if (document.getElementById(variable.name).checked) {
+                                    selectedValue = 1;
+                                } else {
+                                    selectedValue = 0;
+                                }
+                            } else {
+                                selectedValue = document.getElementById(variable.name).value;
+                            }
+                            var this_logit = variable.coefficient * selectedValue;
+                            logit += this_logit;
+                        }
+                    }
+                    var probability = calcProbability(logit) * 100;
+                    var value = parseFloat(Math.round(i * 100) / 100).toFixed(selectedVar.decimalPlaces);
+                    x_axis.push([value]);
+                    probabilities.push([probability]);
+                }
+
+                //graph
+                $(function () {
+                    $('#container').highcharts({
+                        chart: {
+                            type: 'column',
+                            marginRight: 25,
+                            marginBottom: 25
+                        },
+                        title: {
+                            text: config.likelihoodLabel + ' by ' + x_axis_title,
+                            x: -20 //center
+                        },
+                        // subtitle: {
+                        //     text: 'See model below for details',
+                        //     x: -20
+                        // },
+                        xAxis: {
+                            categories: x_axis,
+                            minTickInterval: 1
+                        },
+                        yAxis: {
+                            title: {
+                                text: config.likelihoodLabel
+                            },
+                            max: 100,
+                            min: 0,
+                            plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }]
+                        },
+                        tooltip: {
+                            valueSuffix: '%'
+                        },
+                        legend: {
+                            enabled: false
+                            // layout: 'vertical',
+                            // align: 'right',
+                            // verticalAlign: 'top',
+                            // x: -10,
+                            // y: 100,
+                            // borderWidth: 0
+                        },
+                        exporting: {
+                            enabled: true
+                        },
+                        series: [{
+                            name: '% chance',
+                            data: probabilities
+                        }]
+                    });
+                });
+            } else {//REGULAR CHART
+                //then we will calculate the probability for a range of values for the graph
+                var x_axis = [];
+                var probabilities = [];
+                for (i = selectedVar.graphAxisMin; i <= selectedVar.graphAxisMax; i = i + selectedVar.graphIncrement) {
+                    var logit = config.intercept;
+                    logit += selectedVar.coefficient * i;
+
+                    for (let variable of config.variables) {
+                        if (variable.name != selectedVar.name) {
+                            var selectedValue;
+                            if (variable.binary) {
+                                if (document.getElementById(variable.name).checked) {
+                                    selectedValue = 1;
+                                } else {
+                                    selectedValue = 0;
+                                }
+                            } else {
+                                selectedValue = document.getElementById(variable.name).value;
+                            }
+                            var this_logit = variable.coefficient * selectedValue;
+                            logit += this_logit;
+                        }
+                    }
+                    var probability = calcProbability(logit) * 100;
+                    var value = parseFloat(Math.round(i * 100) / 100).toFixed(selectedVar.decimalPlaces);
+                    x_axis.push([value]);
+                    probabilities.push([probability]);
+                }
+
+                //now that we have our array of probabilities, time to plug it into highcharts
+                $(function () {
+                    $('#container').highcharts({
+                        chart: {
+                            type: 'line',
+                            marginRight: 25,
+                            marginBottom: 25
+                        },
+                        title: {
+                            text: config.likelihoodLabel + ' by ' + x_axis_title,
+                            x: -20 //center
+                        },
+                        // subtitle: {
+                        //     text: 'See model below for details',
+                        //     x: -20
+                        // },
+                        xAxis: {
+                            categories: x_axis,
+                            minTickInterval: 2
+                        },
+                        yAxis: {
+                            title: {
+                                text: config.likelihoodLabel
+                            },
+                            max: 100,
+                            min: 0,
+                            plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }]
+                        },
+                        tooltip: {
+                            valueSuffix: '%'
+                        },
+                        legend: {
+                            enabled: false
+                            // layout: 'vertical',
+                            // align: 'right',
+                            // verticalAlign: 'top',
+                            // x: -10,
+                            // y: 100,
+                            // borderWidth: 0
+                        },
+                        exporting: {
+                            enabled: true
+                        },
+                        series: [{
+                            name: '% chance',
+                            data: probabilities
+                        }]
+                    });
+                });
+            }
+        });
+    });
+</script>
+
+<body id="body">
+    <div id="main" class="page-wide">
+        <div class="header">
+            <h3 id="main-header">My Logistic Regression</h3>
+        </div>
+    </div>
+    <div id="result-space" class="result-space" style="display: none;">
+        <div id="predict-result-text" class="predict-result-text">
+            <h4 id="results-title">Your calculated probability</h4>
+            <h1 id="probability"></h1>
+        </div>
+        <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+    </div>
+</body>
+
+</html>

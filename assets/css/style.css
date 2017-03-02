@@ -1,0 +1,38 @@
+.col-variable {
+	text-align: center;
+}
+.select-variable {
+	font-size: 3em;
+	margin: 20px;
+}
+.checkbox-variable {
+	font-size: 1em;
+	margin: 20px;
+}
+label.check-label {
+	font-weight: 700;
+}
+.select-graph-axis {
+	font-size: 3em;
+	margin: 20px;	
+}
+.select-axis-div {
+	text-align: center;
+}
+.page-wide {
+	margin: 0 auto;
+	box-shadow: 3px 3px 10px 5px #2E3436;
+}
+.header {
+	text-align: center;
+}
+.button-div {
+	text-align: center;
+	padding-bottom: 20px;
+}
+.predict-result-text {
+	text-align: center;
+}
+.result-space {
+	padding-top: 20px;
+}
