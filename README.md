@@ -1,7 +1,7 @@
 # MyLogReg
 Let people play with your logistic regression model.
 
-# How-To
+### How-To
 Just plug your model into the config var at the top of the HTML file and fill out a few settings. 
 ```javascript
 /**************BEGIN EDITING HERE************/
@@ -42,11 +42,10 @@ var config = {
 /*************STOP EDITING HERE**************/
 ```
 
-# Examples
----
+### Examples
 [Chances of Getting into Harvard Law](https://www.mylogreg.us)
 Inline-style: 
-![alt text](https://github.com/kaseyb002/MyLogReg/assets/img/example.png)
+![alt text](https://github.com/kaseyb002/MyLogReg/blob/master/assets/img/example.png)
 
 [Chances of Getting Heart Disease in 10 Years](https://www.mylogreg.us/heart.html)
 
