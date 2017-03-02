@@ -43,10 +43,10 @@ var config = {
 ```
 
 ### Examples
-[Chances of Getting into Harvard Law](https://www.mylogreg.us)
-Inline-style: 
-![alt text](https://github.com/kaseyb002/MyLogReg/blob/master/assets/img/example.png)
+[Predict Getting into Harvard Law](https://www.mylogreg.us)
 
-[Chances of Getting Heart Disease in 10 Years](https://www.mylogreg.us/heart.html)
+![alt text](https://github.com/kaseyb002/MyLogReg/blob/master/assets/img/example.png "Harvard Calculator")
 
-[Chances of Passing Exam](https://www.mylogreg.us/study.html)
+[Predict Heart Disease](https://www.mylogreg.us/heart.html)
+
+[Preddict Passing Exam](https://www.mylogreg.us/study.html)
