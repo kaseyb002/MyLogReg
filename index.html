@@ -13,40 +13,41 @@
 /********************************************/
 /********************************************/
 /**************BEGIN EDITING HERE************/
-    var config = {
-        headerTitle: "Harvard Law Admit Calcuator",
-        resultsTitle: "Chance of Getting into Harvard Law",
-        likelihoodLabel: "Likelihood of Admission",
-        intercept: -97.13444,
-        variables: [
-            {
-                name: "LSAT",
-                coefficient: 0.3172556,//your beta coefficient from the logistic regression model
-                binary: false,//is this a YES/NO 1/0 variable?
-                min: 120,//minimum that user can select for this variable (not required for binary)
-                max: 180,//maximum that user can select for this variable (not required for binary)
-                defaultValue: 170,//value that's already selected when the page loads (use true/false for binary)
-                selectIncrement: 1,//how much to increment between min and max for user select (not required for binary)
-                decimalPlaces: 0,//how many decimal places should be displayed (not required for binary)
-                graphIncrement: 1,//determines the "ticks" on the graph's x-axis (not required for binary)
-                graphAxisMin: 150,//bottom range for graph x-axis (not required for binary)
-                graphAxisMax: 180//top range for graph x-axis (not required for binary)
-            },
-            {
-                name: "GPA",
-                coefficient: 11.05645,
-                binary: false,
-                min: 2.50,
-                max: 4.00,
-                defaultValue: 3.75,
-                selectIncrement: 0.01,
-                decimalPlaces: 2,
-                graphIncrement: 0.10,
-                graphAxisMin: 2.5,
-                graphAxisMax: 4.0
-            }
-            ]
-        };
+var config = {
+    headerTitle: "Harvard Law Admit Calcuator",//title at top of page
+    resultsTitle: "Chances of Getting into Harvard Law",//explains results
+    likelihoodLabel: "Likelihood of Admission",//shows along y-axis of graph
+    intercept: -97.13444,//the intercept coefficient from your model
+    variables: [
+        {
+            name: "LSAT",
+            coefficient: 0.3172556,//your beta coefficient from the logistic regression model
+            binary: false,//is this a YES/NO 1/0 variable?
+            min: 120,//minimum that user can select for this variable (remove if binary)
+            max: 180,//maximum that user can select for this variable (remove if binary)
+            defaultValue: 170,//value that's already selected when the page loads (use true/false for binary)
+            selectIncrement: 1,//how much to increment between min and max for user select (remove if binary)
+            decimalPlaces: 0,//how many decimal places should be displayed (remove if binary)
+            graphIncrement: 1,//determines the "ticks" on the graph's x-axis (remove if binary)
+            graphAxisMin: 150,//bottom range for graph x-axis (remove if binary)
+            graphAxisMax: 180//top range for graph x-axis (remove if binary)
+        },
+        {
+            name: "GPA",
+            coefficient: 11.05645,
+            binary: false,
+            min: 2.50,
+            max: 4.00,
+            defaultValue: 3.75,
+            selectIncrement: 0.01,
+            decimalPlaces: 2,
+            graphIncrement: 0.10,
+            graphAxisMin: 2.5,
+            graphAxisMax: 4.0
+        }
+    ]
+};
+/*Personally built model; got data from lawschoolnumbers.com*/
 /*************STOP EDITING HERE**************/
 /********************************************/
 /********************************************/
