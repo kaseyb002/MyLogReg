@@ -3,8 +3,15 @@ Let other people play with your logistic regression model.
 
 [Try it!](https://www.mylogreg.us)
 
-## How-To
-Just plug your model into the config var at the top of the HTML file and fill out a few settings. 
+## Installation
+Download/clone the repo.
+
+Open the public/index.html file in a text editor.
+
+Type your model into the config var at the top of the HTML file and fill out a few settings. 
+
+Open the HTML file in a browser.
+
 ```javascript
 /**************BEGIN EDITING HERE************/
 var config = {
