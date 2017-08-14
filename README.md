@@ -1,7 +1,13 @@
 # MyLogReg
 Let other people play with your logistic regression model.
 
-[Try it!](https://www.mylogreg.us)
+## Examples
+[Predict Getting into Harvard Law](https://www.mylogreg.us)
+
+[Predict Heart Disease](https://www.mylogreg.us/heart.html)
+
+[Predict Passing Exam](https://www.mylogreg.us/study.html)
+
 ![alt text](https://github.com/kaseyb002/MyLogReg/blob/master/public/assets/img/example.png "Harvard Calculator")
 
 ## Installation
@@ -61,10 +67,3 @@ var config = {
 	defaultValue: false,
 },
 ```
-
-## Examples
-[Predict Getting into Harvard Law](https://www.mylogreg.us)
-
-[Predict Heart Disease](https://www.mylogreg.us/heart.html)
-
-[Predict Passing Exam](https://www.mylogreg.us/study.html)
