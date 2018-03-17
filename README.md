@@ -2,11 +2,13 @@
 Let other people play with your logistic regression model.
 
 ## Examples
-[Predict Getting into Harvard Law](https://www.mylogreg.us)
+[Predict Getting into Harvard Law](https://www.mylogreg.netlify.com)
 
-[Predict Heart Disease](https://www.mylogreg.us/heart.html)
+[Predict Heart Disease](https://www.mylogreg.netlify.com/heart.html)
 
-[Predict Passing Exam](https://www.mylogreg.us/study.html)
+[Predict Passing Exam](https://www.mylogreg.netlify.com/study.html)
+
+[Predict Death Penalty](https://www.mylogreg.netlify.com/willbecharged.html)
 
 ![alt text](https://github.com/kaseyb002/MyLogReg/blob/master/public/assets/img/example.png "Harvard Calculator")
 
@@ -58,7 +60,7 @@ var config = {
 /*************STOP EDITING HERE**************/
 ```
 
-###Inputting Binary Variables:
+### Inputting Binary Variables:
 ```javascript
 {
 	name: "Male",

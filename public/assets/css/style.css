@@ -19,10 +19,22 @@ label.check-label {
 }
 .page-wide {
 	margin: 0 auto;
-	box-shadow: 3px 3px 10px 5px #2E3436;
+	box-shadow: 3px 3px 10px 5px #AAA;
 }
 .header {
 	text-align: center;
+}
+.top-baby-buffer {
+	margin-top: 10px;
+}
+.left-baby-buffer {
+	margin-right: 10px;
+}
+.right-baby-buffer {
+	margin-left: 10px;
+}
+.top-baby-padding-buffer {
+	padding-top: 10px;
 }
 .button-div {
 	text-align: center;
